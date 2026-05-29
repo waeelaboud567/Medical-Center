@@ -5,7 +5,6 @@ namespace App\Repo;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UserRepo
 {
@@ -37,7 +36,7 @@ class UserRepo
 
     public function updateUser(array $data, int $user_id): User
     {
-        $user = User::findOrFail($user_id);
+        $user = User::with('person')->indOrFail($user_id);
 
         $userData = [];
 
@@ -98,56 +97,45 @@ class UserRepo
     {
         $query = User::query();
 
-    if($request->first_name)
-    {
-        $query->whereHas('person',function($q) use($request)
-        {
-            $q->where('first_name','like','%'.$request->first_name.'%');
-        });
-    }
+        if ($request->first_name) {
+            $query->whereHas('person', function ($q) use ($request) {
+                $q->where('first_name', 'like', '%' . $request->first_name . '%');
+            });
+        }
 
-    if($request->last_name)
-    {
-        $query->whereHas('person',function($q) use($request)
-        {
-            $q->where('last_name','like','%'.$request->last_name.'%');
-        });
-    }
+        if ($request->last_name) {
+            $query->whereHas('person', function ($q) use ($request) {
+                $q->where('last_name', 'like', '%' . $request->last_name . '%');
+            });
+        }
 
-    if($request->phone)
-    {
-        $query->whereHas('person',function($q) use($request)
-        {
-            $q->where('phone','like','%'.$request->phone.'%');
-        });
-    }
+        if ($request->phone) {
+            $query->whereHas('person', function ($q) use ($request) {
+                $q->where('phone', 'like', '%' . $request->phone . '%');
+            });
+        }
 
-    if($request->email)
-    {
-        $query->where('email','like','%'.$request->email.'%');
-    }
+        if ($request->email) {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
 
-    if($request->user_name)
-    {
-        $query->where('user_name','like','%'.$request->user_name.'%');
-    }
+        if ($request->user_name) {
+            $query->where('user_name', 'like', '%' . $request->user_name . '%');
+        }
 
-    if($request->status)
-    {
-        $query->where('status',$request->status);
-    }
+        if ($request->status) {
+            $query->where('status', $request->status);
+        }
 
-    return $query->get();
+        return $query->get();
     }
 
     public function destroy($user_id)
     {
-        try{
-        $user=User::findOrFail($user_id);
-        $user->delete();
-        }
-        catch(Exception $e)
-        {
+        try {
+            $user = User::findOrFail($user_id);
+            $user->delete();
+        } catch (Exception $e) {
             throw new Exception("deleted user failed");
         }
     }

@@ -78,7 +78,9 @@ class UserController extends Controller
     public function show(int $user_id)
     {
         $user=$this->userService->getUserByID($user_id);
-        return $user;
+        return response()->json([
+        'user_info'=>new UserResource($user)
+       ], 201,);
     }
 
     public function filterUser(Request $request)
