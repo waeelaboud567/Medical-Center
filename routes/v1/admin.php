@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
@@ -31,5 +33,15 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::put('/{id}', [EmployeeController::class, 'update']);
 
         Route::get('', [EmployeeController::class, 'index']);
+    });
+    Route::prefix('v1/doctors')->group(function (){
+
+        Route::post('',[DoctorController::class,'store']);
+
+        Route::get('/{id}',[DoctorController::class,'show']);
+
+        Route::get('/',[DoctorController::class,'index']);
+
+        Route::patch('/{id}',[DoctorController::class,'update']);
     });
 });

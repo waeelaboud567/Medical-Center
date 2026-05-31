@@ -9,7 +9,7 @@ class Doctor extends Model
 {
     use SoftDeletes;
 
-
+    Protected $fillable = ['license_number','employee_id','specialization_id'];
 
 
     public function employee()
