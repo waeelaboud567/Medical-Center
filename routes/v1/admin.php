@@ -3,12 +3,12 @@
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EmployeeController;
-use App\Models\Doctor;
+use App\Http\Controllers\Admin\SpecializationController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:admin'])->prefix('v1')->group(function () {
 
-    Route::prefix('v1/users')->group(function () {
+    Route::prefix('users')->group(function () {
 
         Route::post('', [UserController::class, 'store']);
 
@@ -26,7 +26,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
         Route::delete('/{id}', [UserController::class, 'destroy']);
     });
-    Route::prefix('v1/employees')->group(function () {
+    Route::prefix('employees')->group(function () {
 
         Route::post('', [EmployeeController::class, 'store']);
 
@@ -34,14 +34,26 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
         Route::get('', [EmployeeController::class, 'index']);
     });
-    Route::prefix('v1/doctors')->group(function (){
+    Route::prefix('doctors')->group(function () {
 
-        Route::post('',[DoctorController::class,'store']);
+        Route::post('', [DoctorController::class, 'store']);
 
-        Route::get('/{id}',[DoctorController::class,'show']);
+        Route::get('/{id}', [DoctorController::class, 'show']);
 
-        Route::get('/',[DoctorController::class,'index']);
+        Route::get('/', [DoctorController::class, 'index']);
 
-        Route::patch('/{id}',[DoctorController::class,'update']);
+        Route::patch('/{id}', [DoctorController::class, 'update']);
+    });
+    Route::prefix('specializations')->group(function () {
+
+        Route::post('', [SpecializationController::class, 'store']);
+
+        Route::put('/{id}', [SpecializationController::class, 'update']);
+
+        Route::get('', [SpecializationController::class, 'index']);
+
+        Route::get('/{id}', [SpecializationController::class, 'show']);
+
+        Route::delete('/{id}', [SpecializationController::class, 'destroy']);
     });
 });
