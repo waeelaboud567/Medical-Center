@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('shift');
             $table->foreignId('department_id')->constrained('departments')->restrictOnDelete();
+            $table->foreignId('employee_id')->constrained('employees')->restrictOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

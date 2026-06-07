@@ -32,4 +32,15 @@ class EmployeeService
         $employees = $this->employeeRepo->getAllEmployees();
         return $employees;
     }
+
+    public function destroy(int $employee_id)
+    {
+        $this->employeeRepo->destroy($employee_id);
+    }
+
+    public function restore(int $employee_id)
+    {
+        $employee=$this->employeeRepo->restore($employee_id);
+        return $employee;
+    }
 }

@@ -11,6 +11,7 @@ class DoctorRepo
     public function store($data)
     {
         $doctor = Doctor::create($data);
+        $doctor->assginRole(['doctor']);
         $doctor->load('employee.person.user','specialization');
         return $doctor;
     }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\SpecializationController;
+use App\Http\Controllers\Admin\NurseController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('v1')->group(function () {
@@ -33,6 +34,10 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('v1')->group(function 
         Route::put('/{id}', [EmployeeController::class, 'update']);
 
         Route::get('', [EmployeeController::class, 'index']);
+
+        Route::delete('/{id}', [EmployeeController::class, 'destroy']);
+
+        Route::patch('/{id}/restore', [EmployeeController::class, 'restore']);
     });
     Route::prefix('doctors')->group(function () {
 
@@ -55,5 +60,19 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('v1')->group(function 
         Route::get('/{id}', [SpecializationController::class, 'show']);
 
         Route::delete('/{id}', [SpecializationController::class, 'destroy']);
+    });
+    Route::prefix('nurses')->group(function () {
+
+        Route::post('', [NurseController::class, 'store']);
+
+        Route::put('/{id}', [NurseController::class, 'update']);
+
+        Route::get('/{id}', [NurseController::class, 'show']);
+
+        Route::get('', [NurseController::class, 'index']);
+
+        Route::delete('/{id}', [NurseController::class, 'destroy']);
+
+        Route::get('', [NurseController::class, 'index']);
     });
 });

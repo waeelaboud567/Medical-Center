@@ -47,4 +47,20 @@ class EmployeeController extends Controller
             200
         ]);
     }
+
+    public function destroy(int $employee_id)
+    {
+        $this->employeeService->destroy($employee_id);
+        return response()->noContent();
+    }
+
+    public function restore(int $employee_id)
+    {
+        $employee = $this->employeeService->restore($employee_id);
+        return response()->json([
+            'message' => 'The employee was successfully recovered',
+            'employee' => new EmployeeResource($employee),
+            200
+        ]);
+    }
 }

@@ -19,7 +19,7 @@ class EmployeeResource extends JsonResource
             'hire_date' => $this->hire_date,
             'salary' => $this->salary,
             'employment_status' => $this->employment_status,
-            'user_info' => new UserResource($this->whenLoaded('person')->user)
+            'user_info' => new UserResource($this->whenLoaded('person')?->user)
 
         ];
     }

@@ -16,5 +16,6 @@ class AuthSeeder extends Seeder
         Role::firstOrCreate(['name' => 'doctor']);
         Role::firstOrCreate(['name' => 'employee']);
         Role::firstOrCreate(['name' => 'patient']);
+        
     }
 }
