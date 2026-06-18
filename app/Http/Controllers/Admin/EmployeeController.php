@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\EmployeeStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EmployeeStatusRequest;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Http\Resources\EmployeeResource;
@@ -62,5 +64,22 @@ class EmployeeController extends Controller
             'employee' => new EmployeeResource($employee),
             200
         ]);
+    }
+
+    public function trashed()
+    {
+        $employees = $this->employeeService->getAllEmployeesTrashed();
+        return response()->json([
+            "employees" => EmployeeResource::collection($employees),
+            200
+        ]);
+    }
+
+    public function changeEmploymentStatus(EmployeeStatusRequest $request, int $employee_id)
+    {
+        $validation = $request->validated();
+        $this->employeeService->changeEmploymentStatus($validation, $employee_id);
+        return response()->json(["message"=>"The employee's status has been changed to {$validation['employment_status']}"]
+        ,200);
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\SpecializationController;
 use App\Http\Controllers\Admin\NurseController;
+use App\Http\Controllers\Admin\DepartmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('v1')->group(function () {
@@ -38,6 +39,11 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('v1')->group(function 
         Route::delete('/{id}', [EmployeeController::class, 'destroy']);
 
         Route::patch('/{id}/restore', [EmployeeController::class, 'restore']);
+
+        Route::get('/trashed', [EmployeeController::class, 'trashed']);
+
+        Route::patch('/{id}/status',[EmployeeController::class,'changeEmploymentStatus']);
+
     });
     Route::prefix('doctors')->group(function () {
 
@@ -74,5 +80,20 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('v1')->group(function 
         Route::delete('/{id}', [NurseController::class, 'destroy']);
 
         Route::get('', [NurseController::class, 'index']);
+    });
+    Route::prefix('departments')->group(function () {
+
+        Route::post('', [DepartmentController::class, 'store']);
+
+        Route::put('/{id}', [DepartmentController::class, 'update']);
+
+        Route::get('', [DepartmentController::class, 'index']);
+
+        Route::get('/{id}', [DepartmentController::class, 'show']);
+
+        Route::delete('/{id}', [DepartmentController::class, 'destroy']);
+
+        Route::patch('/{id}/restore', [DepartmentController::class, 'restore']);
+
     });
 });

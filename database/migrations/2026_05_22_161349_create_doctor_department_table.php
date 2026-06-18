@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('doctor_id')->constrained('doctors');
             $table->foreignId('department_id')->constrained('departments');
+            $table->date('assigned_at')->default(now()->toDateString());
+            $table->date('ended_at')->nullable();
             $table->timestamps();
         });
     }

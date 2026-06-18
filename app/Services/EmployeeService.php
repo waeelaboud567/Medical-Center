@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\EmployeeStatus;
 use App\Models\Employee;
 use App\Repo\EmployeeRepo;
 
@@ -42,5 +43,17 @@ class EmployeeService
     {
         $employee=$this->employeeRepo->restore($employee_id);
         return $employee;
+    }
+
+    public function getAllEmployeesTrashed()
+    {
+        $employees = $this->employeeRepo->getAllEmployeesTrashed();
+        return $employees;
+    }
+
+    public function changeEmploymentStatus($data,int $employee_id)
+    {
+        $employee=$this->employeeRepo->getEmployeeByID($employee_id);
+        $employee->changeEmploymentStatus($data['employment_status']);
     }
 }

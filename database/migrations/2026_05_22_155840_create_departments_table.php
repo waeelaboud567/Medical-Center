@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('department_name')->unique();
             $table->string('location')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
